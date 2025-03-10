@@ -1,0 +1,299 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Playfair+Display:wght@400;700&display=swap');
+
+/* Reset y estilos base */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: 'Playfair Display', serif;
+  transition: background-color 0.5s ease;
+  padding: 20px;
+  background-color: #1E3A5F; /* Azul elegante */
+  color: #F8F8FF;
+  font-size: 18px;
+}
+.hidden {
+  display: none;
+}
+
+/* Contenedor principal */
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+/* Sección de fórmulas (izquierda) */
+#formulas {
+  flex: 1 1 20%;
+  max-width: 220px;
+  padding: 15px;
+  border-right: 2px solid #ccc;
+}
+#formulas h3 {
+  text-align: center;
+  margin-bottom: 15px;
+  color: #FFD700; /* Dorado */
+  font-size: 24px;
+}
+#formulas ul {
+  list-style: none;
+  font-size: 16px;
+}
+#formulas li {
+  margin-bottom: 8px;
+}
+
+/* Sección central: Ejercicios y botones de modo */
+#content {
+  flex: 2 1 50%;
+  padding: 15px;
+  text-align: center;
+}
+#modeButtons {
+  margin-bottom: 20px;
+}
+button.mode {
+  margin: 0 5px;
+  padding: 12px 20px;
+  font-size: 18px;
+  cursor: pointer;
+  border: none;
+  background-color: #273C73;
+  color: #FFD700;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  transition: background-color 0.3s ease;
+}
+button.mode:hover {
+  background-color: #2F4F8F;
+}
+button.mode::after {
+  content: "";
+  position: absolute;
+  left: -50%;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 215, 0, 0.2);
+  transform: skewX(-25deg);
+  transition: left 0.5s;
+}
+button.mode:hover::after {
+  left: 150%;
+}
+#exercise {
+  margin: 20px 0;
+  font-size: 22px;
+  font-weight: bold;
+  color: #FFD700;
+}
+.answers button {
+  display: block;
+  width: 80%;
+  margin: 10px auto;
+  padding: 12px;
+  font-size: 18px;
+  cursor: pointer;
+  border: 2px solid #FFD700;
+  background-color: #1E3A5F;
+  color: #FFD700;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.answers button:hover {
+  background-color: #FFD700;
+  color: #1E3A5F;
+}
+.answers button::after {
+  content: "";
+  position: absolute;
+  left: -50%;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 215, 0, 0.2);
+  transform: skewX(-25deg);
+  transition: left 0.5s;
+}
+.answers button:hover::after {
+  left: 150%;
+}
+
+/* Sección de contadores (derecha) */
+#counters {
+  flex: 1 1 20%;
+  max-width: 220px;
+  padding: 15px;
+  text-align: right;
+  font-size: 18px;
+  color: #32CD32; /* Verde para contadores */
+}
+#counters div {
+  margin-bottom: 10px;
+}
+
+/* Pantalla final: victoria o derrota, a pantalla completa */
+#finalScreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.finalMessage {
+  font-family: 'Cinzel', serif;
+  font-size: 48px;
+  margin: 30px 0;
+  color: inherit;
+}
+.finalMessage button {
+  font-family: 'Cinzel', serif;
+  padding: 16px 30px;
+  font-size: 24px;
+  cursor: pointer;
+  border: none;
+  background-color: #333;
+  color: #fff;
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
+}
+.finalMessage button:hover {
+  background-color: #555;
+}
+.finalMessage button::after {
+  content: "";
+  position: absolute;
+  left: -50%;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 215, 0, 0.2);
+  transform: skewX(-25deg);
+  transition: left 0.5s;
+}
+.finalMessage button:hover::after {
+  left: 150%;
+}
+
+/* Sección de pregunta final (8 incisos) */
+#finalQuestion {
+  margin-top: 20px;
+}
+#finalQuestion h3 {
+  margin-bottom: 15px;
+  color: #FFD700;
+  font-size: 24px;
+}
+#finalQuestion .options button {
+  display: block;
+  width: 80%;
+  margin: 8px auto;
+  padding: 10px;
+  font-size: 18px;
+  cursor: pointer;
+  border: 2px solid #FFD700;
+  background-color: #1E3A5F;
+  color: #FFD700;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+#finalQuestion .options button:hover {
+  background-color: #FFD700;
+  color: #1E3A5F;
+}
+#finalQuestion .options button::after {
+  content: "";
+  position: absolute;
+  left: -50%;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 215, 0, 0.2);
+  transform: skewX(-25deg);
+  transition: left 0.5s;
+}
+#finalQuestion .options button:hover::after {
+  left: 150%;
+}
+
+/* Sección de integral abierta (no se usa en este ajuste) */
+#openIntegral {
+  margin-top: 20px;
+  text-align: center;
+}
+#openIntegral h3 {
+  margin-bottom: 15px;
+  color: #FFD700;
+  font-size: 24px;
+}
+#openIntegral input {
+  padding: 10px;
+  font-size: 18px;
+  width: 60%;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+#openIntegral button {
+  padding: 10px 16px;
+  font-size: 18px;
+  cursor: pointer;
+  border: none;
+  background-color: #28a745;
+  color: #fff;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  transition: background-color 0.3s ease;
+}
+#openIntegral button:hover {
+  background-color: #218838;
+}
+#openIntegral button::after {
+  content: "";
+  position: absolute;
+  left: -50%;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 215, 0, 0.2);
+  transform: skewX(-25deg);
+  transition: left 0.5s;
+}
+#openIntegral button:hover::after {
+  left: 150%;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    align-items: center;
+  }
+  #formulas, #counters {
+    max-width: 100%;
+    text-align: center;
+    border: none;
+    margin-bottom: 20px;
+  }
+  #content {
+    width: 100%;
+  }
+}

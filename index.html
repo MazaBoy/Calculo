@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Ejercicios de Cálculo</title>
+  <!-- Importamos las fuentes desde Google Fonts -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Playfair+Display:wght@400;700&display=swap');
+
+    /* Reset y estilos base */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Playfair Display', serif;
+      transition: background-color 0.5s ease;
+      padding: 20px;
+      background-color: #1E3A5F; /* Azul elegante */
+      color: #F8F8FF;
+      font-size: 18px;
+    }
+    .hidden {
+      display: none;
+    }
+    /* Contenedor principal */
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+    /* Sección de fórmulas (izquierda) */
+    #formulas {
+      flex: 1 1 20%;
+      max-width: 220px;
+      padding: 15px;
+      border-right: 2px solid #ccc;
+    }
+    #formulas h3 {
+      text-align: center;
+      margin-bottom: 15px;
+      color: #FFD700; /* Dorado */
+      font-size: 24px;
+    }
+    #formulas ul {
+      list-style: none;
+      font-size: 16px;
+    }
+    #formulas li {
+      margin-bottom: 8px;
+    }
+    /* Sección central: Ejercicios y botones de modo */
+    #content {
+      flex: 2 1 50%;
+      padding: 15px;
+      text-align: center;
+    }
+    #modeButtons {
+      margin-bottom: 20px;
+    }
+    button.mode {
+      margin: 0 5px;
+      padding: 12px 20px;
+      font-size: 18px;
+      cursor: pointer;
+      border: none;
+      background-color: #273C73;
+      color: #FFD700;
+      border-radius: 4px;
+      position: relative;
+      overflow: hidden;
+      transition: background-color 0.3s ease;
+    }
+    button.mode:hover {
+      background-color: #2F4F8F;
+    }
+    button.mode::after {
+      content: "";
+      position: absolute;
+      left: -50%;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 215, 0, 0.2);
+      transform: skewX(-25deg);
+      transition: left 0.5s;
+    }
+    button.mode:hover::after {
+      left: 150%;
+    }
+    #exercise {
+      margin: 20px 0;
+      font-size: 22px;
+      font-weight: bold;
+      color: #FFD700;
+    }
+    .answers button {
+      display: block;
+      width: 80%;
+      margin: 10px auto;
+      padding: 12px;
+      font-size: 18px;
+      cursor: pointer;
+      border: 2px solid #FFD700;
+      background-color: #1E3A5F;
+      color: #FFD700;
+      border-radius: 4px;
+      position: relative;
+      overflow: hidden;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    .answers button:hover {
+      background-color: #FFD700;
+      color: #1E3A5F;
+    }
+    .answers button::after {
+      content: "";
+      position: absolute;
+      left: -50%;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 215, 0, 0.2);
+      transform: skewX(-25deg);
+      transition: left 0.5s;
+    }
+    .answers button:hover::after {
+      left: 150%;
+    }
+    /* Sección de contadores (derecha) */
+    #counters {
+      flex: 1 1 20%;
+      max-width: 220px;
+      padding: 15px;
+      text-align: right;
+      font-size: 18px;
+      color: #32CD32; /* Verde para contadores */
+    }
+    #counters div {
+      margin-bottom: 10px;
+    }
+    /* Mensajes finales (You win / You lose) con tipografía gótica */
+    #finalScreen {
+      text-align: center;
+      padding-top: 50px;
+    }
+    .finalMessage {
+      font-family: 'Cinzel', serif;
+      font-size: 48px;
+      margin: 30px 0;
+      color: inherit;
+    }
+    .finalMessage button {
+      padding: 12px 25px;
+      font-size: 20px;
+      cursor: pointer;
+      border: none;
+      background-color: #333;
+      color: #fff;
+      border-radius: 4px;
+      position: relative;
+      overflow: hidden;
+      transition: background-color 0.3s ease;
+    }
+    .finalMessage button:hover {
+      background-color: #555;
+    }
+    .finalMessage button::after {
+      content: "";
+      position: absolute;
+      left: -50%;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 215, 0, 0.2);
+      transform: skewX(-25deg);
+      transition: left 0.5s;
+    }
+    .finalMessage button:hover::after {
+      left: 150%;
+    }
+    /* Sección de integral abierta */
+    #openIntegral {
+      margin-top: 20px;
+      text-align: center;
+    }
+    #openIntegral h3 {
+      margin-bottom: 15px;
+      color: #FFD700;
+      font-size: 24px;
+    }
+    #openIntegral input {
+      padding: 10px;
+      font-size: 18px;
+      width: 60%;
+      margin-right: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    #openIntegral button {
+      padding: 10px 16px;
+      font-size: 18px;
+      cursor: pointer;
+      border: none;
+      background-color: #28a745;
+      color: #fff;
+      border-radius: 4px;
+      position: relative;
+      overflow: hidden;
+      transition: background-color 0.3s ease;
+    }
+    #openIntegral button:hover {
+      background-color: #218838;
+    }
+    #openIntegral button::after {
+      content: "";
+      position: absolute;
+      left: -50%;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 215, 0, 0.2);
+      transform: skewX(-25deg);
+      transition: left 0.5s;
+    }
+    #openIntegral button:hover::after {
+      left: 150%;
+    }
+    /* Responsividad */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        align-items: center;
+      }
+      #formulas, #counters {
+        max-width: 100%;
+        text-align: center;
+        border: none;
+        margin-bottom: 20px;
+      }
+      #content {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Pantalla principal -->
+  <div id="mainScreen">
+    <div class="container">
+      <!-- Sección de fórmulas -->
+      <div id="formulas">
+        <h3>Fórmulas</h3>
+        <ul>
+          <li><strong>Derivadas:</strong></li>
+          <li>(d/dx) xⁿ = n xⁿ⁻¹</li>
+          <li>(d/dx) sin(x) = cos(x)</li>
+          <li>(d/dx) cos(x) = -sin(x)</li>
+          <li>(d/dx) eˣ = eˣ</li>
+          <li>(d/dx) ln(x) = 1/x</li>
+          <br>
+          <li><strong>Integrales:</strong></li>
+          <li>∫ xⁿ dx = xⁿ⁺¹/(n+1)</li>
+          <li>∫ 1/x dx = ln|x|</li>
+          <li>∫ cos(x) dx = sin(x)</li>
+          <li>∫ sin(x) dx = -cos(x)</li>
+          <li>∫ eˣ dx = eˣ</li>
+        </ul>
+      </div>
+
+      <!-- Sección central: Ejercicio -->
+      <div id="content">
+        <div id="modeButtons">
+          <button id="btnDerivada" class="mode">Cálculo Diferencial</button>
+          <button id="btnIntegral" class="mode">Integral</button>
+        </div>
+        <div id="exercise"></div>
+        <div class="answers"></div>
+        <!-- Integral de respuesta abierta, inicialmente oculta -->
+        <div id="openIntegral" class="hidden">
+          <h3>Resuelve la siguiente integral:</h3>
+          <p>∫ (2x + 3) dx</p>
+          <input type="text" id="respuestaAbierta" placeholder="Ingresa la respuesta">
+          <button id="checkOpen">Enviar</button>
+        </div>
+      </div>
+
+      <!-- Sección de contadores -->
+      <div id="counters">
+        <div>Aciertos: <span id="aciertos">0</span></div>
+        <div>Fallos: <span id="fallos">0</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pantalla de victoria o derrota (inicialmente oculta) -->
+  <div id="finalScreen" class="hidden"></div>
+
+  <!-- JavaScript -->
+  <script>
+    // Variables globales
+    let aciertos = 0;
+    let fallos = 0;
+    let currentMode = 'derivada'; // 'derivada' o 'integral'
+    let currentQuestion = null;
+
+    // Ejercicios para derivadas
+    const derivadas = [
+      {
+        pregunta: "¿Cuál es la derivada de x²?",
+        opciones: ["2x", "x", "2", "x²"],
+        correcta: "2x"
+      },
+      {
+        pregunta: "¿Cuál es la derivada de 3x³?",
+        opciones: ["9x²", "3x²", "x²", "6x"],
+        correcta: "9x²"
+      },
+      {
+        pregunta: "¿Cuál es la derivada de sin(x)?",
+        opciones: ["cos(x)", "-cos(x)", "sin(x)", "-sin(x)"],
+        correcta: "cos(x)"
+      },
+      {
+        pregunta: "¿Cuál es la derivada de cos(x)?",
+        opciones: ["-sin(x)", "sin(x)", "-cos(x)", "cos(x)"],
+        correcta: "-sin(x)"
+      },
+      {
+        pregunta: "¿Cuál es la derivada de eˣ?",
+        opciones: ["eˣ", "xe^(x-1)", "ln(eˣ)", "1/eˣ"],
+        correcta: "eˣ"
+      },
+      {
+        pregunta: "¿Cuál es la derivada de ln(x)?",
+        opciones: ["1/x", "x", "ln(x)/x", "x ln(x)"],
+        correcta: "1/x"
+      }
+    ];
+
+    // Ejercicios para integrales (opción múltiple)
+    const integrales = [
+      {
+        pregunta: "¿Cuál es la integral de x dx?",
+        opciones: ["x²/2", "x", "2x", "2/x"],
+        correcta: "x²/2"
+      },
+      {
+        pregunta: "¿Cuál es la integral de 2x dx?",
+        opciones: ["x²", "2x²", "x", "2/x"],
+        correcta: "x²"
+      },
+      {
+        pregunta: "¿Cuál es la integral de cos(x) dx?",
+        opciones: ["sin(x)", "-sin(x)", "cos(x)", "-cos(x)"],
+        correcta: "sin(x)"
+      },
+      {
+        pregunta: "¿Cuál es la integral de sin(x) dx?",
+        opciones: ["-cos(x)", "cos(x)", "-sin(x)", "sin(x)"],
+        correcta: "-cos(x)"
+      },
+      {
+        pregunta: "¿Cuál es la integral de eˣ dx?",
+        opciones: ["eˣ", "xe^(x-1)", "eˣ+1", "ln(eˣ)"],
+        correcta: "eˣ"
+      }
+    ];
+
+    // Función para barajar array (Fisher-Yates)
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    // Función para mostrar una nueva pregunta según el modo
+    function nuevaPregunta() {
+      // Ocultar la sección de integral abierta en caso de que estuviera visible
+      document.getElementById("openIntegral").classList.add("hidden");
+      let ejercicio;
+      if (currentMode === 'derivada') {
+        ejercicio = derivadas[Math.floor(Math.random() * derivadas.length)];
+      } else {
+        ejercicio = integrales[Math.floor(Math.random() * integrales.length)];
+      }
+      currentQuestion = ejercicio;
+      mostrarEjercicio(ejercicio);
+    }
+
+    // Mostrar el ejercicio y sus opciones
+    function mostrarEjercicio(ejercicio) {
+      document.getElementById("exercise").textContent = ejercicio.pregunta;
+      const answersDiv = document.querySelector(".answers");
+      answersDiv.innerHTML = "";
+      // Barajar las opciones para hacerlas menos evidentes
+      let opciones = shuffle([...ejercicio.opciones]);
+      opciones.forEach(opcion => {
+        const btn = document.createElement("button");
+        btn.textContent = opcion;
+        btn.onclick = () => verificarRespuesta(opcion);
+        answersDiv.appendChild(btn);
+      });
+    }
+
+    // Verificar respuesta y actualizar contadores
+    function verificarRespuesta(seleccion) {
+      if (seleccion === currentQuestion.correcta) {
+        aciertos++;
+      } else {
+        fallos++;
+      }
+      actualizarContadores();
+      if (aciertos >= 5) {
+        mostrarVictoria();
+      } else if (fallos >= 5) {
+        mostrarDerrota();
+      } else {
+        nuevaPregunta();
+      }
+    }
+
+    // Actualizar los contadores en pantalla
+    function actualizarContadores() {
+      document.getElementById("aciertos").textContent = aciertos;
+      document.getElementById("fallos").textContent = fallos;
+    }
+
+    // Mostrar pantalla de victoria
+    function mostrarVictoria() {
+      // Ocultamos la pantalla principal y mostramos la de final
+      document.getElementById("mainScreen").classList.add("hidden");
+      const finalScreen = document.getElementById("finalScreen");
+      finalScreen.classList.remove("hidden");
+      finalScreen.style.backgroundColor = "green";
+      finalScreen.innerHTML = `
+        <div class="finalMessage" style="color:white;">You win</div>
+        <button id="btnOpenIntegral">Memento mori</button>
+      `;
+      document.getElementById("btnOpenIntegral").onclick = mostrarOpenIntegral;
+    }
+
+    // Mostrar pantalla de derrota
+    function mostrarDerrota() {
+      document.getElementById("mainScreen").classList.add("hidden");
+      const finalScreen = document.getElementById("finalScreen");
+      finalScreen.classList.remove("hidden");
+      finalScreen.style.backgroundColor = "red";
+      finalScreen.innerHTML = `
+        <div class="finalMessage" style="color:black;">You lose</div>
+        <button id="btnRenacer">renacer</button>
+      `;
+      document.getElementById("btnRenacer").onclick = reiniciar;
+    }
+
+    // Mostrar la integral de respuesta abierta (modo Memento mori)
+    function mostrarOpenIntegral() {
+      document.getElementById("finalScreen").classList.add("hidden");
+      document.getElementById("mainScreen").classList.remove("hidden");
+      // Mostrar la sección de integral abierta y ocultar opciones de respuesta múltiple
+      document.getElementById("openIntegral").classList.remove("hidden");
+      document.getElementById("exercise").classList.add("hidden");
+      document.querySelector(".answers").classList.add("hidden");
+      // Asignar evento al botón de enviar la respuesta abierta
+      document.getElementById("checkOpen").onclick = verificarOpen;
+    }
+
+    // Verificar respuesta de la integral abierta
+    function verificarOpen() {
+      const respuesta = document.getElementById("respuestaAbierta").value.trim().toLowerCase().replace(/\s/g,"");
+      const respuestaCorrecta1 = "x^2+3x";
+      const respuestaCorrecta2 = "x²+3x";
+      if (respuesta === respuestaCorrecta1 || respuesta === respuestaCorrecta2) {
+        // Mostrar pantalla de victoria final
+        document.body.style.backgroundColor = "#f5e6a1"; // dorado claro
+        document.getElementById("mainScreen").classList.add("hidden");
+        const finalScreen = document.getElementById("finalScreen");
+        finalScreen.classList.remove("hidden");
+        finalScreen.innerHTML = `<div class="finalMessage" style="color:white;">veni,vedi,venci</div>`;
+      } else {
+        alert("Respuesta incorrecta. Inténtalo de nuevo.");
+      }
+    }
+
+    // Reiniciar la aplicación
+    function reiniciar() {
+      aciertos = 0;
+      fallos = 0;
+      actualizarContadores();
+      document.getElementById("finalScreen").classList.add("hidden");
+      document.getElementById("mainScreen").classList.remove("hidden");
+      document.body.style.backgroundColor = "#1E3A5F";
+      // Asegurarse de que se muestran las secciones correctas
+      document.getElementById("exercise").classList.remove("hidden");
+      document.querySelector(".answers").classList.remove("hidden");
+      document.getElementById("openIntegral").classList.add("hidden");
+      nuevaPregunta();
+    }
+
+    // Asignar eventos a los botones de modo
+    document.getElementById("btnDerivada").addEventListener("click", function() {
+      currentMode = 'derivada';
+      // Aseguramos que se muestran las secciones de opción múltiple
+      document.getElementById("openIntegral").classList.add("hidden");
+      document.getElementById("exercise").classList.remove("hidden");
+      document.querySelector(".answers").classList.remove("hidden");
+      nuevaPregunta();
+    });
+    document.getElementById("btnIntegral").addEventListener("click", function() {
+      currentMode = 'integral';
+      document.getElementById("openIntegral").classList.add("hidden");
+      document.getElementById("exercise").classList.remove("hidden");
+      document.querySelector(".answers").classList.remove("hidden");
+      nuevaPregunta();
+    });
+
+    // Inicializar con modo derivada
+    nuevaPregunta();
+  </script>
+</body>
+</html>
